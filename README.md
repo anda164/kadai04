@@ -1,4 +1,4 @@
-# 課題03 Firebaseを使ったアプリ
+# 課題04 Firebaseを使ったアプリ
 ## ①課題内容（Javascript/Firebase）
 - FirebaseAuth(e-mail/password)を使用したユーザー認証 + FirebaseHostingの実験
 - トップページ（index2.html）でユーザーID(email)とパスワードを入力し、Regisgerを押すとユーザーを登録する（登録ユーザーはFirebase上で確認）
