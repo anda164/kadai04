@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success</title>
+</head>
+<body>
+    
+    <div id="msg"></div>
+    <div id="tbl"></div>
+    
+    <button id="signout">SignOut</button>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="./js/fb_config.js"></script>
+    
+
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+        import { getAuth, onAuthStateChanged,signOut } from 'https://www.gstatic.com/firebasejs/9.6.11/firebase-auth.js';
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // User is signed in, see docs for a list of available properties
+            // https://firebase.google.com/docs/reference/js/firebase.User
+
+            const uid = user.uid;
+            // The user object has basic properties such as display name, email, etc.
+            const displayName = user.displayName;
+            const email = user.email;
+            const photoURL = user.photoURL;
+            const emailVerified = user.emailVerified;
+            const provider = user.providerData[0].providerId;
+            const providerUID = user.providerData[0].uid;
+            const lastLogin = user.metadata.lastSignInTime;
+            
+            const emb_html = `
+            <table>
+                <tr><th>UserName:</th><td>${displayName}</td></tr>
+                <tr><th>UserEmail:</th><td>${email}</td></tr>
+                <tr><th>VerifiedBy:</th><td>${provider}</td></tr>
+                <tr><th>SignInID:</th><td>${providerUID}</td></tr>
+                <tr><th>LastLogin:</th><td>${lastLogin}</td></tr>
+                
+            </table>
+            `;
+
+            $("#tbl").html(emb_html);
+            $("#msg").html("<p>Login succeed</p>");
+
+            console.log(uid);
+
+        } else {
+            // User is signed out
+            alert("Redirect to home..");
+            const html = "index2.html";
+            window.location.href=html;
+
+        }
+        });
+        $("#signout").on("click", function(){
+            
+            signOut(auth).then(() => {
+            // Sign-out successful.
+            alert("Sign-out successful")
+            }).catch((error) => {
+            // An error happened.
+            });
+
+        });
+
+    </script>
+ 
+
+
+</body>
+</html>
